@@ -12,7 +12,7 @@ C     Version 1.0 (6/2012)
       real amp(MAXPROB,MAXAMP), nEv(MAXPROB,MAXAMP),
      1     mBar(MAXPROB,MAXAMP), dBar(MAXPROB,MAXAMP), 
      2     eBar(MAXPROB,MAXAMP), risk(MAXPROB,MAXAMP,MAXCASE)
-      character*80 file1, fname(MAXCASE), filein, fileout
+      character*80 file1, fname(MAXCASE), filein, fileout, dummy
       integer nProb, nAmp(MAXPROB), testnum
       real*8 poisson(MAXAMP), gm(MAXAMP,MAXPROB), test(MAXAMP)
       integer nSpecPer, ncurve(MAXPROB), flag(MAXCASE)
@@ -28,7 +28,8 @@ C     Version 1.0 (6/2012)
       real hazcon(MAXCASE), ohaz(MAXPROB)
       real ampper(MAXPROB,MAXAMP)
       integer nAmpper(MAXPROB), idum
-      character other*12, total*18, dummy*1
+      character other*12, total*18
+*1
 
       real magBins(50), DistBins(50), EpsBins(50), XCostBins(50)
       real wtoutrisk(100,100,100,100), outrisk(100,100,100,100)
@@ -83,11 +84,11 @@ c     Specify PSHA Haz45 output files.
          write (*,*)'Enter the corresponding hazard curve number and spectral period.'
          read (15,*) ncurve(i), per(i)
 
-         write (*,*) 'Opening Haz42 ouput file: ', filein
+         write (*,*) 'Opening Haz45 ouput file: ', filein
          write (25,'(f8.3,8x,i8,11x,a80)') per(i), ncurve(i), filein 
 
-c     Read in the hazard curves for all periods in given Haz42 ouptut file.
-         read (10,*) nflt, testnum
+c     Read in the hazard curves for all periods in given Haz45 ouptut file.
+         read (10,*) nflt, testnum 
          read (10,'(a1)') dummy
 
          do j=1,testnum
@@ -104,14 +105,15 @@ c     Read in the hazard curves for all periods in given Haz42 ouptut file.
 C    Check that requested ncurve is not greater than nProb.
          if (ncurve(i) .gt. nProb) then	
              write (*,*) 'Ncurve value is greater than nProb for given'
-             write (*,*) 'Haz42 output file! Check input file parameters.'
+             write (*,*) 'Haz45 output file! Check input file parameters.'
              stop 99
          endif  
 
          do iProb=1,nProb
+
             read (10,'( 15x,i5)')  iAtten
             read (10,*) nAmp(iProb)
-            read (10,'( 59x,30f12.4)') (amp(iProb,k),k=1,nAmp(iProb))
+            read (10,'( 60x,30f12.4)') (amp(iProb,k),k=1,nAmp(iProb))
 
             do l=1,nFlt
                read (10,'( 2x,a38,2f6.3,f8.1,1x,30e12.4)') fname(l),
@@ -119,16 +121,17 @@ C    Check that requested ncurve is not greater than nProb.
      1              mindist(l),(risk(iProb,k,l),k=1,nAmp(iProb))
             enddo
 
-            read (10,'( 59x,50e12.4)') (nEv(iProb,k),k=1,nAmp(iProb))
+            read (10,'( 61x,50e12.4)') (nEv(iProb,k),k=1,nAmp(iProb))
             read (10,'(a1)') dummy
 
-            read (10,'( 59x,50e12.3)') (mBar(iProb,k),k=1,nAmp(iProb))
-            read (10,'( 59x,50e12.3)') (dBar(iProb,k),k=1,nAmp(iProb))
-            read (10,'( 59x,50e12.3)') (eBar(iProb,k),k=1,nAmp(iProb))
+            read (10,'( 61x,50e12.3)') (mBar(iProb,k),k=1,nAmp(iProb))
+            read (10,'( 61x,50e12.3)') (dBar(iProb,k),k=1,nAmp(iProb))
+            read (10,'( 61x,50e12.3)') (eBar(iProb,k),k=1,nAmp(iProb))
 
             do idum=1,3
-               read (10,'( a1)') dummy
+               read (10,'( a80)') dummy
             enddo
+            
 
          enddo
          close (10)
