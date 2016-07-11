@@ -5,38 +5,33 @@ C the equal deaggregation results for a given suite of PSHA runs.
 C This version is compatible with the output files from Haz45
 c which only outputs the mean hazard code combined over all attenuation models. 
 
-C     Version 1.0 (6/2012)
+C     Version 45.1 (6/2016)
 
-      parameter (MAXCASE=1000, MAXFLT=1000, MAXPROB=200, MAXAMP=150)
-      real long, lat 
-      real amp(MAXPROB,MAXAMP), nEv(MAXPROB,MAXAMP),
-     1     mBar(MAXPROB,MAXAMP), dBar(MAXPROB,MAXAMP), 
-     2     eBar(MAXPROB,MAXAMP), risk(MAXPROB,MAXAMP,MAXCASE)
-      character*80 file1, fname(MAXCASE), filein, fileout, dummy
-      integer nProb, nAmp(MAXPROB), testnum
+      implicit none
+      include 'max_dims.H'
+
+      integer nMagbins, nDistBins, nEpsBins, nXCostBins, bflag, 
+     1        count1, count2, nProb, nAmp(MAXPROB), testnum,
+     2        nSpecPer, ncurve(MAXPROB), iProb, iTest, nTest, 
+     3        iAtten, nAmpper(MAXPROB), idum, i, nflt, j, k, l,
+     4        imag, idis, ieps, iXco, iMagBin, iDistBin, iInten
+      integer nskip, iMagbins, iDistbins, m, ii
+
+      real amp(MAXPROB,MAXAMP), nEv(MAXPROB,MAXAMP), x, x1, x2,
+     1     mBar(MAXPROB,MAXAMP), dBar(MAXPROB,MAXAMP), y1, y2, 
+     2     eBar(MAXPROB,MAXAMP), risk(MAXPROB,MAXAMP,MAXCASE),
+     3     long, lat, per(MAXPROB), segModelwt(MAXCASE),
+     4     wtoutrisk(100,100,100,100), outrisk(100,100,100,100)       
+      real wtmBar(MAXPROB,MAXAMP), wtdBar(MAXPROB,MAXAMP),
+     1     wteBar(MAXPROB,MAXAMP), al_segwt(MAXCASE), gmdeag(100),
+     2     mindist(MAXCASE), mag(MAXAMP,MAXPROB), magBins(MAXBINS),
+     3     dis(MAXAMP,MAXPROB), eps(MAXAMP,MAXPROB), XCostBins(MAXBINS),
+     4     ampper(MAXPROB,MAXAMP), DistBins(MAXBINS), EpsBins(MAXBINS) 
+      real y(100,100,100) 
       real*8 poisson(MAXAMP), gm(MAXAMP,MAXPROB), test(MAXAMP)
-      integer nSpecPer, ncurve(MAXPROB), flag(MAXCASE)
-      real per(MAXPROB), segModelwt(MAXCASE)
-      real wtmBar(MAXPROB,MAXAMP)
-      real wtdBar(MAXPROB,MAXAMP),wteBar(MAXPROB,MAXAMP)
       real*8 wtnEv(MAXPROB,MAXAMP)
-      real al_segwt(MAXCASE), mindist(MAXCASE), x
-      integer iProb, iTest, nTest, iAtten, ampcount
-      integer singflag, singflt
-      real*8 hazs(MAXCASE,MAXAMP),wtrisk(MAXPROB,MAXAMP,MAXCASE), otherhaz(MAXPROB,MAXPROB)
-      real mag(MAXAMP,MAXPROB), dis(MAXAMP,MAXPROB), eps(MAXAMP,MAXPROB), amplevel, persep
-      real hazcon(MAXCASE), ohaz(MAXPROB)
-      real ampper(MAXPROB,MAXAMP)
-      integer nAmpper(MAXPROB), idum
-      character other*12, total*18
-*1
-
-      real magBins(50), DistBins(50), EpsBins(50), XCostBins(50)
-      real wtoutrisk(100,100,100,100), outrisk(100,100,100,100)
-      real gmdeag(100)
-      real y(100,100,100), y1, y2, x1, x2
-      integer nMagbins, nDistBins, nEpsBins, nXCostBins
-      integer bflag, count1, count2
+      real*8 wtrisk(MAXPROB,MAXAMP,MAXCASE)
+      character*80 file1, fname(MAXCASE), filein, fileout, dummy
 
       write (*,'( 2x,''Enter run file'')')
       read (*,'( a80)') file1
@@ -44,10 +39,9 @@ C     Version 1.0 (6/2012)
 
       write (*,*) 'Enter the output filename.'
       read (15,*) fileout
-cnjg      open (25,file=fileout,status='new')
       open (25,file=fileout,status='unknown')
       write (25,*) ' *** Output file from program Haz45-Post *** '
-      write (25,*) '              *** Version 1.0 ***           '
+      write (25,*) '              *** Version 45.1 ***           '
       write (25,*) 
       write (25,'(a17,2x,a80)') ' Input filename: ', file1
       write (25,*) 
@@ -55,7 +49,7 @@ cnjg      open (25,file=fileout,status='new')
 c     Enter run parameters
       write (*,*) 'Enter number of hazard levels to consider'
       read (15,*) nTest
-      write (25,'(a27,2x,i6)') ' Number of hazard levels = ', nTest
+      write (25,'(i6,2x,a27)') nTest, ' Number of hazard levels = '
       write (25,*)
 
       write (*,*) 'Enter the hazard levels.'
@@ -69,8 +63,7 @@ c     Enter run parameters
 
       write (*,*) 'Enter the number spectral periods.'
       read (15,*) nSpecPer
-      write (25,'(a29,2x,i6)') 'Number of Spectral Periods = ', nSpecPer
-      write (25,*)
+      write (25,'(i6, 2x,a29)') nSpecPer, 'Number of Spectral Periods = '
       write (25,*) ' Period (sec)    Curve Number     Filename'
 
 C     First compute the equal hazard spectra.
@@ -184,9 +177,9 @@ c Check for zero values in hazard curve.
 c Interpolate the hazard curve.
                 if ( poisson(l) .lt. test(itest) ) then
 
-                   x = (alog(test(itest)) - alog(poisson(l-1)))/
-     1            (alog(poisson(l))-alog(poisson(l-1))) 
-     1          * (alog(ampper(i,l))-alog(ampper(i,l-1))) + alog(ampper(i,l-1))
+                   x = (log(test(itest)) - log(poisson(l-1)))/
+     1            (log(poisson(l))-log(poisson(l-1))) 
+     1          * (log(ampper(i,l))-log(ampper(i,l-1))) + log(ampper(i,l-1))
 
                   gm(iTest,i) = exp(x)
 C Now interpolate the Mbar, Dbar and epsBar based on the ground motion level.
@@ -265,14 +258,15 @@ C     Perform the Equal Deaggregation Analysis
       write (25,*) ' Period (sec)    Curve Number     Filename'
 
 C     Read extra spacing line in input file to separate Hazard and Deag output files.
-      read (15,'(a1)') dummy
-
+      read (15,'(a80)') dummy
+      write (*,'( 2x,''dummy line:'',a80)') dummy
+      
 C     Start loop over each spectral period. 
       do 2000 i=1,nSpecPer
 
 c     Specify PSHA Haz42 deaggregation output file. 
          read (15,'(a80)') filein
-         open (10,file=filein,status='old')
+         open (10,file=filein,status='old',err=5000)
 
 c         write (*,*)'Enter the corresponding hazard curve number and spectral period.'
          read (15,*) ncurve(i), per(i)
@@ -438,6 +432,11 @@ C Now write out the results for this period.
       close (25)
 
       stop 
+
+ 5000   write (*,'( 2x,''bad deagg file name'')')
+        write (*,'( a80)') filein
+       stop
+
       end
 	  
  
