@@ -264,7 +264,7 @@ C     Read extra spacing line in input file to separate Hazard and Deag output f
 C     Start loop over each spectral period. 
       do 2000 i=1,nSpecPer
 
-c     Specify PSHA Haz42 deaggregation output file. 
+c     Specify PSHA Haz45 deaggregation output file. 
          read (15,'(a80)') filein
          open (10,file=filein,status='old',err=5000)
 
@@ -272,7 +272,7 @@ c         write (*,*)'Enter the corresponding hazard curve number and spectral p
          read (15,*) ncurve(i), per(i)
          write (*,'( ''period:'',f10.3,2x,'' Read hazard out file:'', a80)') per(i), filein
 
-c         write (*,'(a40,2x,a80)') 'Opening Haz42 deaggregation ouput file: ', filein
+c         write (*,'(a40,2x,a80)') 'Opening Haz45 deaggregation ouput file: ', filein
          write (25,'(f8.3,8x,i8,11x,a40)') per(i), ncurve(i), filein 
 
 
@@ -297,10 +297,15 @@ C Loop over each attenuation relationship.
 	    read (10,*) nAmp(iProb)
 	    read (10,'( 46x,30f12.3)') (amp(iProb,k),k=1,nAmp(iProb))
 
-c Skip over bar bins
-            do idum=1,23
+c Skip over bar bins, down to first XCosT values
+            do idum=1,11
                read (10,'(a1)') dummy
             enddo
+            
+c Skip over XCosT values, down to first deaggregation values
+            do idum=1,nXcostbins+5
+               read (10,'(a1)') dummy
+            enddo            
 
 C Read in the deaggregation bins for all epsilon.
             do iMagBin=1,nMagBins-1

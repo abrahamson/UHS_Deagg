@@ -1,0 +1,18 @@
+UHS_output.txt
+1				Number of hazard levels
+4.0E-4  			  hazard level
+3				Number of spectral periods
+HazRefTest1_Site1.out3
+1    0.00                 	  ncurve, period
+HazRefTest1_Site1.out3
+2    0.4        		  ncurve, period
+HazRefTest1_Site1.out3
+3    2.0      			  ncurve, period
+*** Line break for Deag Files ***
+HazRefTest1_Site1.out4
+1    0.00                 	  ncurve, period
+HazRefTest1_Site1.out4
+2    0.4        		  ncurve, period
+HazRefTest1_Site1.out4
+3    2.0          		  ncurve, period
+HazRefTest1_Site1.out4

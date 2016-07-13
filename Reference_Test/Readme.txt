@@ -1,0 +1,1 @@
+This test is compatible with HAZ-45.1
