@@ -122,7 +122,6 @@ AreaSource
 6.0            		  fault widths
 1.0          		  wts for fault widths 
 0  0.0  0.0  0.0	Depth pdf model (0=uniform) and params
-1             		OverRideMag option
 1             		Number of max mags (fault width 1)
 6.5			  max mags
 1.			  wts for max mags
@@ -168,7 +167,6 @@ FaultB
 12.            		  fault widths
 1.0          		  wts for fault widths 
 0  0.0  0.0  0.0	Depth pdf model (0=uniform) and params
-1             		OverRideMag option
 1             		Number of max mags (fault width 1)
 6.75			  max mags
 1.			  wts for max mags
@@ -214,7 +212,6 @@ FaultC
 12.            		  fault widths
 1.0          		  wts for fault widths 
 0  0.0  0.0  0.0	Depth pdf model (0=uniform) and params
-1             		OverRideMag option
 1             		Number of max mags (fault width 1)
 6.5			  max mags
 1.			  wts for max mags

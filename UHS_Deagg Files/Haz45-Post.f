@@ -5,7 +5,7 @@ C the equal deaggregation results for a given suite of PSHA runs.
 C This version is compatible with the output files from Haz45
 c which only outputs the mean hazard code combined over all attenuation models. 
 
-C     Version 45.1 (6/2016)
+C     Version 45.2 (7/2016)
 
       implicit none
       include 'max_dims.H'
@@ -41,7 +41,7 @@ C     Version 45.1 (6/2016)
       read (15,*) fileout
       open (25,file=fileout,status='unknown')
       write (25,*) ' *** Output file from program Haz45-Post *** '
-      write (25,*) '              *** Version 45.1 ***           '
+      write (25,*) '              *** Version 45.2 ***           '
       write (25,*) 
       write (25,'(a17,2x,a80)') ' Input filename: ', file1
       write (25,*) 
@@ -106,7 +106,7 @@ C    Check that requested ncurve is not greater than nProb.
 
             read (10,'( 15x,i5)')  iAtten
             read (10,*) nAmp(iProb)
-            read (10,'( 60x,30f12.4)') (amp(iProb,k),k=1,nAmp(iProb))
+            read (10,'( 61x,30f12.4)') (amp(iProb,k),k=1,nAmp(iProb))
 
             do l=1,nFlt
                read (10,'( 2x,a38,2f6.3,f8.1,1x,30e12.4)') fname(l),
