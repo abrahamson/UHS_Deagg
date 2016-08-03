@@ -1,18 +1,65 @@
 UHS_output.txt
-1				Number of hazard levels
+1                         	Number of hazard levels
 4.0E-4  			  hazard level
-3				Number of spectral periods
+15                        	Number of spectral periods
 HazRefTest1_Site1.out3
 1    0.00                 	  ncurve, period
 HazRefTest1_Site1.out3
-2    0.4        		  ncurve, period
+2    0.075                	  ncurve, period
 HazRefTest1_Site1.out3
-3    2.0      			  ncurve, period
+3    0.1                  	  ncurve, period
+HazRefTest1_Site1.out3
+4    0.125                	  ncurve, period
+HazRefTest1_Site1.out3
+5    0.15                 	  ncurve, period
+HazRefTest1_Site1.out3
+6    0.20                 	  ncurve, period
+HazRefTest1_Site1.out3
+7    0.30                 	  ncurve, period
+HazRefTest1_Site1.out3
+8    0.40                 	  ncurve, period
+HazRefTest1_Site1.out3
+9    0.5                  	  ncurve, period
+HazRefTest1_Site1.out3
+10    0.75                	  ncurve, period
+HazRefTest1_Site1.out3
+11    1.0                 	  ncurve, period
+HazRefTest1_Site1.out3
+12    1.5                 	  ncurve, period
+HazRefTest1_Site1.out3
+13    2.0                 	  ncurve, period
+HazRefTest1_Site1.out3
+14    3.0                 	  ncurve, period
+HazRefTest1_Site1.out3
+15    5.0                 	  ncurve, period
 *** Line break for Deag Files ***
 HazRefTest1_Site1.out4
 1    0.00                 	  ncurve, period
 HazRefTest1_Site1.out4
-2    0.4        		  ncurve, period
+2    0.075                	  ncurve, period
 HazRefTest1_Site1.out4
-3    2.0          		  ncurve, period
+3    0.1                  	  ncurve, period
 HazRefTest1_Site1.out4
+4    0.125                	  ncurve, period
+HazRefTest1_Site1.out4
+5    0.15                 	  ncurve, period
+HazRefTest1_Site1.out4
+6    0.20                 	  ncurve, period
+HazRefTest1_Site1.out4
+7    0.30                 	  ncurve, period
+HazRefTest1_Site1.out4
+8    0.40                 	  ncurve, period
+HazRefTest1_Site1.out4
+9    0.5                  	  ncurve, period
+HazRefTest1_Site1.out4
+10    0.75                	  ncurve, period
+HazRefTest1_Site1.out4
+11    1.0                 	  ncurve, period
+HazRefTest1_Site1.out4
+12    1.5                 	  ncurve, period
+HazRefTest1_Site1.out4
+13    2.0                 	  ncurve, period
+HazRefTest1_Site1.out4
+14    3.0                 	  ncurve, period
+HazRefTest1_Site1.out4
+15    5.0                 	  ncurve, period
