@@ -1,7 +1,7 @@
-  *** Output file from program Haz45-Post *** 
+  *** Output file from program UHS_deagg  *** 
                *** Version 45.2 ***           
  
- Input filename:   Run_UHS.txt                                                                     
+ Input filename:   run_uhs.txt                                                                     
  
      1   Number of hazard levels = 
  
@@ -100,7 +100,7 @@
  
   *** Deaggregation Results ***
  
- Input filename:   Run_UHS.txt                                                                     
+ Input filename:   run_uhs.txt                                                                     
  
  
   Period (sec)    Curve Number     Filename
@@ -422,4 +422,3 @@ Ground Motion Level =    0.01845
  
  
  
-  *** Normal Completion of Haz45-Post Program ***

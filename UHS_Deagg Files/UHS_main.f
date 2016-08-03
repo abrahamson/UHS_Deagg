@@ -1,11 +1,11 @@
-      program Haz45Post
+      program UHS_deagg
 
 C This program will compute the equal hazard spectra and as well
 C the equal deaggregation results for a given suite of PSHA runs. 
 C This version is compatible with the output files from Haz45
 c which only outputs the mean hazard code combined over all attenuation models. 
 
-C     Version 45.2 (7/2016)
+C     Version 45.2 (8/2016)
 
       implicit none
       include 'max_dims.H'
@@ -27,11 +27,17 @@ C     Version 45.2 (7/2016)
      2     mindist(MAXCASE), mag(MAXAMP,MAXPROB), magBins(MAXBINS),
      3     dis(MAXAMP,MAXPROB), eps(MAXAMP,MAXPROB), XCostBins(MAXBINS),
      4     ampper(MAXPROB,MAXAMP), DistBins(MAXBINS), EpsBins(MAXBINS) 
-      real y(100,100,100) 
+      real y(100,100,100), version 
       real*8 poisson(MAXAMP), gm(MAXAMP,MAXPROB), test(MAXAMP)
       real*8 wtnEv(MAXPROB,MAXAMP)
       real*8 wtrisk(MAXPROB,MAXAMP,MAXCASE)
       character*80 file1, fname(MAXCASE), filein, fileout, dummy
+
+      write (*,*) '*************************'
+      write (*,*) '*   UHS_Deagg Code for  *'
+      write (*,*) '*       HAZ 45.2        *'
+      write (*,*) '*       Aug 2016        *'
+      write (*,*) '*************************'
 
       write (*,'( 2x,''Enter run file'')')
       read (*,'( a80)') file1
@@ -40,7 +46,7 @@ C     Version 45.2 (7/2016)
       write (*,*) 'Enter the output filename.'
       read (15,*) fileout
       open (25,file=fileout,status='unknown')
-      write (25,*) ' *** Output file from program Haz45-Post *** '
+      write (25,*) ' *** Output file from program UHS_deagg  *** '
       write (25,*) '              *** Version 45.2 ***           '
       write (25,*) 
       write (25,'(a17,2x,a80)') ' Input filename: ', file1
@@ -80,9 +86,15 @@ c     Specify PSHA Haz45 output files.
          write (*,*) 'Opening Haz45 ouput file: ', filein
          write (25,'(f8.3,8x,i8,11x,a80)') per(i), ncurve(i), filein 
 
+C        Check for version compatibility with hazard code
+           read (10,*) version
+            if (version .ne. 45.2) then
+            write (*,*) 'out3 from incompatible version of Haz45, use Haz45.2'
+            stop 99
+           endif
+
 c     Read in the hazard curves for all periods in given Haz45 ouptut file.
          read (10,*) nflt, testnum 
-         read (10,'(a1)') dummy
 
          do j=1,testnum
             read (10,'(a1)') dummy
@@ -275,7 +287,13 @@ c         write (*,*)'Enter the corresponding hazard curve number and spectral p
 c         write (*,'(a40,2x,a80)') 'Opening Haz45 deaggregation ouput file: ', filein
          write (25,'(f8.3,8x,i8,11x,a40)') per(i), ncurve(i), filein 
 
-
+C        Check for version compatibility with hazard code
+           read (10,*) version
+            if (version .ne. 45.2) then
+            write (*,*) 'out4 from incompatible version of Haz45, use Haz45.2'
+            stop 99
+           endif
+         
 c Read in the deaggregation bins.
          read (10,'(i5)') nMagbins
          read (10,'(20f10.3)') (magBins(imag),imag=1,nMagbins)
@@ -433,7 +451,7 @@ C Now write out the results for this period.
 
       write (25,*) 
       write (25,*) 
-      write (25,*) ' *** Normal Completion of Haz45-Post Program ***'
+      write (*,*) ' *** UHS_Deagg Code Completed with Normal Termination ***'
       close (25)
 
       stop 
