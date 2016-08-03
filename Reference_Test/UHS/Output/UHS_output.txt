@@ -422,4 +422,3 @@ Ground Motion Level =    0.01845
  
  
  
-  *** Normal Completion of Haz45-Post Program ***

@@ -33,6 +33,12 @@ C     Version 45.2 (8/2016)
       real*8 wtrisk(MAXPROB,MAXAMP,MAXCASE)
       character*80 file1, fname(MAXCASE), filein, fileout, dummy
 
+      write (*,*) '*************************'
+      write (*,*) '*   UHS_Deagg Code for  *'
+      write (*,*) '*       HAZ 45.2        *'
+      write (*,*) '*       Aug 2016        *'
+      write (*,*) '*************************'
+
       write (*,'( 2x,''Enter run file'')')
       read (*,'( a80)') file1
       open (15,file=file1,status='old')
@@ -445,7 +451,7 @@ C Now write out the results for this period.
 
       write (25,*) 
       write (25,*) 
-      write (25,*) ' *** Normal Completion of Haz45-Post Program ***'
+      write (*,*) ' *** UHS_Deagg Code Completed with Normal Termination ***'
       close (25)
 
       stop 
