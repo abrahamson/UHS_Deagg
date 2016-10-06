@@ -7,6 +7,8 @@
 mrweprefs.r
 project.r
 absoft_run_env.sh
+release
+*.exe
 
 
 # Ignore Mac OS X system files
