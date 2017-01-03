@@ -33,11 +33,11 @@ C     Version 45.2 (8/2016)
       real*8 wtrisk(MAXPROB,MAXAMP,MAXCASE)
       character*80 file1, fname(MAXCASE), filein, fileout, dummy
 
-      write (*,*) '*************************'
-      write (*,*) '*   UHS_Deagg Code for  *'
-      write (*,*) '*       HAZ 45.2        *'
-      write (*,*) '*       Aug 2016        *'
-      write (*,*) '*************************'
+      write (*,*) '********************************'
+      write (*,*) '*        UHS_Deagg Code        *'
+      write (*,*) '*         Release 45.2         *'
+      write (*,*) '*      Tagged Jan 3, 2017      *'
+      write (*,*) '********************************'
 
       write (*,'( 2x,''Enter run file'')')
       read (*,'( a80)') file1
